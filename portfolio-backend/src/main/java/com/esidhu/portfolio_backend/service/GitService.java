@@ -1,5 +1,8 @@
 package com.esidhu.portfolio_backend.service;
 
+import static com.esidhu.portfolio_backend.constant.Constant.GITHUB_API_URL;
+import static com.esidhu.portfolio_backend.constant.Constant.GITHUB_USERNAME;
+
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class GitService {
     private final RestTemplate restTemplate;
-    private static final String GITHUB_API_URL = "https://api.github.com";
 
     @Value("${git.api.pat}")
     private String gitApiPat;
@@ -19,10 +21,8 @@ public class GitService {
         this.restTemplate = new RestTemplate();
     }
 
-    public String getRepositoryList() {
+    private String makeRequest(String url) {
         try {
-            String url = GITHUB_API_URL + "/user/repos";
-
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + gitApiPat);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -34,5 +34,25 @@ public class GitService {
         } catch (Exception exception) {
             throw new RuntimeException(exception.getMessage());
         }
+    }
+
+    public String getAllRepos() {
+        String url = "%s/user/repos".formatted(GITHUB_API_URL);
+        return makeRequest(url);
+    }
+
+    public String getRepoByName(String name) {
+        String url = "%s/repos/%s/%s".formatted(GITHUB_API_URL, GITHUB_USERNAME, name);
+        return makeRequest(url);
+    }
+
+    public String getRepoReadme(String name) {
+        String url = "%s/repos/%s/%s/contents/README.md".formatted(GITHUB_API_URL, GITHUB_USERNAME, name);
+        return makeRequest(url);
+    }
+
+    public String getRepoLatestCommit(String name) {
+        String url = "%s/repos/%s/%s/commits?sha=main&per_page=1".formatted(GITHUB_API_URL, GITHUB_USERNAME, name);
+        return makeRequest(url);
     }
 }
