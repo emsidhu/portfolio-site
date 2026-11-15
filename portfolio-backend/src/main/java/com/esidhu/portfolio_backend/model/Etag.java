@@ -18,15 +18,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "etags")
 public class Etag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, updatable = false)
-    private Long id;
-    @Column(name = "url", unique = true)
-    private String url;
-    private String value;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", unique = true, updatable = false)
+  private Long id;
+  @Column(name = "url", unique = true)
+  private String url;
+  private String value;
 
-    public Etag(String url) {
-        this.url = url;
-    }
+  public Etag(String url) {
+    this.url = url;
+  }
 }
