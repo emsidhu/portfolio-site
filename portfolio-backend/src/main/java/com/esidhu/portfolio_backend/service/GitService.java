@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.util.Pair;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class GitService {
 
   private Pair<JsonNode, HttpStatusCode> makeRequest(String url, boolean suppressNotFound) {
     try {
-      Optional<Etag> etagOptional = etagRepo.findByUrl(url);
+      Optional<Etag> etagOptional = etagRepo.findById(url);
       Optional<String> etagValue = etagOptional.map(Etag::getValue);
 
       ResponseEntity<JsonNode> response = restClient.get().uri(url).accept(MediaType.APPLICATION_JSON)
@@ -56,9 +57,17 @@ public class GitService {
 
       // Save etag value if it changed (or does not exist)
       if (response.getStatusCode() != HttpStatus.NOT_MODIFIED) {
-        Etag etag = etagOptional.orElse(new Etag(url));
-        etag.setValue(response.getHeaders().getETag());
-        etagRepo.save(etag);
+        String newEtag = response.getHeaders().getETag();
+        if (newEtag != null) {
+          int updatedRows = etagRepo.updateValueByUrl(url, newEtag);
+          if (updatedRows == 0) {
+            try {
+              etagRepo.save(new Etag(url, newEtag));
+            } catch (DataIntegrityViolationException ignored) {
+              etagRepo.updateValueByUrl(url, newEtag);
+            }
+          }
+        }
       }
 
       JsonNode body = response.getBody();

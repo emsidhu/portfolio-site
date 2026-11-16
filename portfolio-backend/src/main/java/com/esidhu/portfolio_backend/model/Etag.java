@@ -19,10 +19,7 @@ import lombok.Setter;
 @Table(name = "etags")
 public class Etag {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true, updatable = false)
-  private Long id;
-  @Column(name = "url", unique = true)
+  @Column(name = "url", nullable = false, updatable = false, length = 512)
   private String url;
   private String value;
 
