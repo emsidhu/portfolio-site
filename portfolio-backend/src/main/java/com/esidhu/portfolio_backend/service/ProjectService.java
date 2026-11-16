@@ -44,10 +44,10 @@ public class ProjectService {
   }
 
   public Project getProject(Long id) {
-    Pair<Project, HttpStatusCode> response = gitService.getRepo(id);
+    Pair<Optional<Project>, HttpStatusCode> response = gitService.getRepo(id);
     // Update project with new data if it was modified since last GET
     if (response.getSecond() != HttpStatus.NOT_MODIFIED)
-      updateProject(response.getFirst());
+      updateProject(response.getFirst().orElseThrow(() -> new RuntimeException("Project does not exist")));
 
     return projectRepo.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
   }

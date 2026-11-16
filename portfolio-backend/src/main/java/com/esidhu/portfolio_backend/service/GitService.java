@@ -99,7 +99,7 @@ public class GitService {
     return Pair.of(projects, result.getSecond());
   }
 
-  public @Nullable Pair<Project, HttpStatusCode> getRepo(Long id) {
+  public Pair<Optional<Project>, HttpStatusCode> getRepo(Long id) {
     String url = UriComponentsBuilder.fromUriString(GITHUB_API_URL)
         .path("/repositories/{id}")
         .buildAndExpand(id)
@@ -107,7 +107,7 @@ public class GitService {
 
     Pair<JsonNode, HttpStatusCode> result = makeRequest(url, false);
     JsonNode body = result.getFirst();
-    return Pair.of(body != null && !body.isNull() ? toProject(body) : null, result.getSecond());
+    return Pair.of(Optional.ofNullable(body != null && !body.isNull() ? toProject(body) : null), result.getSecond());
   }
 
   private Project toProject(JsonNode repository) {
