@@ -1,6 +1,5 @@
 package com.esidhu.portfolio_backend.controller;
 
-import java.time.Instant;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esidhu.portfolio_backend.model.Project;
-import com.esidhu.portfolio_backend.service.GitService;
 import com.esidhu.portfolio_backend.service.ProjectService;
 
 import lombok.RequiredArgsConstructor;
