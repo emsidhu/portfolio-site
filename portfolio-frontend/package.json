@@ -12,6 +12,7 @@
     "fmt:check": "oxfmt --check ."
   },
   "dependencies": {
+    "axios": "^1.21.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
