@@ -20,8 +20,10 @@ import com.esidhu.portfolio_backend.repo.ProjectRepo;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class ProjectService {
@@ -50,6 +52,13 @@ public class ProjectService {
       updateProject(response.getFirst().orElseThrow(() -> new RuntimeException("Project does not exist")));
 
     return projectRepo.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
+  }
+
+  public Project setProjectActive(Long id, Boolean value) {
+    log.info("Setting project {} isActive to {}", id, value);
+    Project project = projectRepo.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
+    project.setIsActive(value);
+    return projectRepo.save(project);
   }
 
   private void updateProject(Project project) {

@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "projects")
 public class Project {
   @Id
@@ -31,4 +33,6 @@ public class Project {
   private Instant latestCommitDate;
   private String title;
   private String photoUrl;
+  @Builder.Default
+  private Boolean isActive = false;
 }

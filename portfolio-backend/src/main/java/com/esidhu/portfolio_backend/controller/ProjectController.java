@@ -1,12 +1,13 @@
 package com.esidhu.portfolio_backend.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.esidhu.portfolio_backend.model.Project;
 import com.esidhu.portfolio_backend.service.ProjectService;
 
@@ -27,5 +28,11 @@ public class ProjectController {
   @GetMapping("/{id}")
   public Project getProject(@PathVariable Long id) {
     return projectService.getProject(id);
+  }
+
+  @PatchMapping("/{id}/active")
+  public ResponseEntity<Project> updateProjectActiveStatus(@PathVariable Long id,
+      @RequestParam Boolean active) {
+    return ResponseEntity.ok().body(projectService.setProjectActive(id, active));
   }
 }
