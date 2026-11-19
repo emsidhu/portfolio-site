@@ -20,8 +20,8 @@ public class ProjectController {
   private final ProjectService projectService;
 
   @GetMapping
-  public Page<Project> getProjects(@RequestParam(value = "page", defaultValue = "0") int page,
-      @RequestParam(value = "size", defaultValue = "10") int size) {
+  public Page<Project> getProjects(@RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size) {
     return projectService.getAllProjects(page, size);
   }
 
@@ -30,9 +30,16 @@ public class ProjectController {
     return projectService.getProject(id);
   }
 
-  @PatchMapping("/{id}/active")
-  public ResponseEntity<Project> updateProjectActiveStatus(@PathVariable Long id,
-      @RequestParam Boolean active) {
-    return ResponseEntity.ok().body(projectService.setProjectActive(id, active));
+  @PatchMapping("/{id}/featured")
+  public ResponseEntity<Project> updateProjectFeaturedStatus(@PathVariable Long id,
+      @RequestParam Boolean isFeatured) {
+    return ResponseEntity.ok().body(projectService.setProjectFeatured(id, isFeatured));
+  }
+
+  // Sets project with given id to current and removes current status from
+  // previously current project
+  @PatchMapping("/{id}/current")
+  public ResponseEntity<Project> setProjectCurrent(@PathVariable Long id) {
+    return ResponseEntity.ok().body(projectService.setProjectCurrent(id));
   }
 }

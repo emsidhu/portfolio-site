@@ -34,5 +34,7 @@ public class Project {
   private String title;
   private String photoUrl;
   @Builder.Default
-  private Boolean isActive = false;
+  private Boolean isFeatured = false;
+  @Builder.Default
+  private Boolean isCurrent = false;
 }

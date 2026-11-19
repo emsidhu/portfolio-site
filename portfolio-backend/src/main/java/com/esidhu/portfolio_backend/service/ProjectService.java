@@ -54,10 +54,34 @@ public class ProjectService {
     return projectRepo.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
   }
 
-  public Project setProjectActive(Long id, Boolean value) {
-    log.info("Setting project {} isActive to {}", id, value);
-    Project project = projectRepo.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
-    project.setIsActive(value);
+  public Project setProjectFeatured(Long id, Boolean value) {
+    log.info("Setting project {} isFeatured to {}", id, value);
+    Project project = projectRepo.findById(id)
+        .orElseThrow(() -> new RuntimeException("Project not found"));
+
+    // Only check limit if setting 'isFeatured' to true and it isn't already true
+    if (Boolean.TRUE.equals(value) && !Boolean.TRUE.equals(project.getIsFeatured())) {
+      List<Project> currentFeatured = projectRepo.findAllFeaturedForUpdate();
+      if (currentFeatured.size() >= 3) {
+        throw new IllegalStateException("Cannot feature more than 3 projects at once.");
+      }
+    }
+
+    project.setIsFeatured(value);
+    return projectRepo.save(project);
+  }
+
+  @Transactional
+  public Project setProjectCurrent(Long id) {
+    log.info("Setting project {} to current", id);
+
+    // Get rid of existing current project before setting new project to current
+    projectRepo.clearAllCurrent();
+    projectRepo.flush();
+
+    Project project = projectRepo.findById(id)
+        .orElseThrow(() -> new RuntimeException("Project not found"));
+    project.setIsCurrent(true);
     return projectRepo.save(project);
   }
 
