@@ -1,0 +1,61 @@
+/* GLOBAL VARIABLES */
+:root {
+    
+    /**
+     * typography
+     */
+	--ff-poppins: 'Poppins', sans-serif;
+    
+    --fs-1: 4.2rem;
+	--fs-2: 3.2rem;
+	--fs-3: 2.3rem;
+	--fs-4: 1.8rem;
+	--fs-5: 1.5rem;
+	--fs-6: 1.4rem;
+	--fs-7: 1.3rem;
+	--fs-8: 1.1rem;
+
+	--fw-500: 500;
+	--fw-600: 600;
+	--fw-400: 400;
+
+	/* Line height */
+	--lh-1: 1.5;
+}
+
+body {
+	font-family: var(--ff-poppins);
+	background-color: var(--white);
+	line-height: var(--lh-1);
+	-webkit-font-smoothing: antialiased;
+}
+
+a,
+img,
+span,
+data,
+time,
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+a {
+	text-decoration: none;
+}
+
+p,
+h1,
+h3,
+h4,
+h5,
+h6,
+a {
+	color: var(--spooky-black-1);
+}
+
+i {
+	vertical-align: middle;
+}
