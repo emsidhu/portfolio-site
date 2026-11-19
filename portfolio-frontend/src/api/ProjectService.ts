@@ -10,6 +10,10 @@ export async function getProject(id: string) {
     return await axios.get(`${API_URL}/${id}`)
 }
 
-export async function setProjectActive(id: string, isActive: boolean) {
-    return await axios.get(`${API_URL}/${id}/active?active=${isActive}`)
+export async function setProjectFeatured(id: string, isFeatured: boolean) {
+    return await axios.get(`${API_URL}/${id}/featured?isFeatured=${isFeatured}`)
+}
+
+export async function setProjectCurrent(id: string) {
+    return await axios.get(`${API_URL}/${id}/current`)
 }
