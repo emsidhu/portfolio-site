@@ -1,12 +1,18 @@
 function Navbar() {
   return (
-    <nav className="navbar d-flex flex-row pb-3">
-      <a className="navbar-brand" href="/">
-        <i className="bi bi-house" />
-      </a>
-      <a href="/projects">Projects</a>
-      <a href="/resume">Resume</a>
-      <a href="https://github.com/emsidhu">
+    <nav className="navbar">
+      <div className="align-items-center d-flex gap-10 ps-5">
+        <a className="nav-icon" href="/">
+          <i className="bi bi-house" />
+        </a>
+        <a className="nav-link" href="/projects">
+          Projects
+        </a>
+        <a className="nav-link" href="/resume">
+          Resume
+        </a>
+      </div>
+      <a className="nav-icon" href="https://github.com/emsidhu">
         <i className="bi bi-github"></i>
       </a>
     </nav>

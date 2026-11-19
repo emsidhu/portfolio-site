@@ -1,6 +1,6 @@
 /* GLOBAL VARIABLES */
 :root {
-    
+
     /**
      * typography
      */
@@ -22,6 +22,23 @@
 	/* Line height */
 	--lh-1: 1.5;
 }
+
+/* RESET */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* SCROLL BAR */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 
 body {
 	font-family: var(--ff-poppins);
@@ -53,9 +70,24 @@ h4,
 h5,
 h6,
 a {
-	color: var(--spooky-black-1);
+	color: black;
 }
 
 i {
 	vertical-align: middle;
+}
+
+
+.navbar {
+    font-size: var(--fs-3);
+    font-weight: 600;
+}
+
+.nav-link {
+    padding: 0rem 2rem;
+}
+
+.nav-icon {
+    padding: 0rem 2rem;
+    font-size: var(--fs-2);
 }
