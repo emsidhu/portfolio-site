@@ -1,7 +1,7 @@
 function Navbar() {
   return (
-    <nav className="navbar">
-      <div className="align-items-center d-flex gap-10 ps-5">
+    <nav className="navbar fixed-top fs-3xl">
+      <div className="align-items-center d-flex gap-10">
         <a className="nav-icon" href="/">
           <i className="bi bi-house" />
         </a>

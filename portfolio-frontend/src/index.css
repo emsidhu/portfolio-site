@@ -1,35 +1,50 @@
 /* GLOBAL VARIABLES */
 :root {
+  --mauve-magic: hsl(275.37, 100%, 73.73%);
+  --amethyst: hsl(275.63, 41.03%, 54.12%);
+  --tomato: hsl(9.64, 94.15%, 59.8%);
+  --rosy-copper: hsl(9.73, 61.16%, 47.45%);
 
-    /**
+  /**
      * typography
      */
-	--ff-poppins: 'Poppins', sans-serif;
-    
-    --fs-1: 4.2rem;
-	--fs-2: 3.2rem;
-	--fs-3: 2.3rem;
-	--fs-4: 1.8rem;
-	--fs-5: 1.5rem;
-	--fs-6: 1.4rem;
-	--fs-7: 1.3rem;
-	--fs-8: 1.1rem;
+  --ff-poppins: "Poppins", sans-serif;
+  --ff-work-sans: "Work Sans", sans-serif
 
-	--fw-500: 500;
-	--fw-600: 600;
-	--fw-400: 400;
+  --fs-1: 4.2rem;
+  --fs-2: 3.2rem;
+  --fs-3: 2.3rem;
+  --fs-4: 1.8rem;
+  --fs-5: 1.5rem;
+  --fs-6: 1.4rem;
+  --fs-7: 1.3rem;
+  --fs-8: 1.1rem;
 
-	/* Line height */
-	--lh-1: 1.5;
+  --fw-500: 500;
+  --fw-600: 600;
+  --fw-400: 400;
+
+  /* Line height */
+  --lh-1: 1.5;
+
+  /* Gradient */
+  --home-gradient: linear-gradient(-22deg, var(--amethyst) 0%, var(--mauve-magic) 91%);
+
+  /* Radius */
+  --radius-pill: 500px;
+  --radius-circle: 50%;
+  --radius-3: 3px;
+  --radius-5: 5px;
+  --radius-10: 10px;
 }
 
 /* RESET */
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* SCROLL BAR */
@@ -39,12 +54,11 @@ body {
   -ms-overflow-style: none;
 }
 
-
 body {
-	font-family: var(--ff-poppins);
-	background-color: var(--white);
-	line-height: var(--lh-1);
-	-webkit-font-smoothing: antialiased;
+  font-family: var(--ff-poppins);
+  background-color: var(--white);
+  line-height: var(--lh-1);
+  -webkit-font-smoothing: antialiased;
 }
 
 a,
@@ -56,38 +70,49 @@ input,
 button,
 textarea,
 select {
-	font: inherit;
+  font: inherit;
 }
 
 a {
-	text-decoration: none;
-}
-
-p,
-h1,
-h3,
-h4,
-h5,
-h6,
-a {
-	color: black;
+  text-decoration: none;
+  color: inherit;
 }
 
 i {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
+.home-btn {
+  color: #ffffff;
+  background-color: alpha(from var(--tomato) / 25%);
+  border: 2px solid var(--tomato);
+  font-size: var(--fs-4);
+  padding: 3px 10px;
+  transition: 0.2s ease-out;
+  margin-top: 1rem;
+}
+
+.home-body {
+  background: var(--home-gradient);
+  color: #ffffff;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-weight: 600;
+}
 
 .navbar {
-    font-size: var(--fs-3);
-    font-weight: 600;
-}
-
-.nav-link {
-    padding: 0rem 2rem;
+  font-weight: 600;
+  background-color: transparent;
+  color: inherit;
+  padding: 1.5rem 2.75rem;
 }
 
 .nav-icon {
-    padding: 0rem 2rem;
-    font-size: var(--fs-2);
+  font-size: var(--fs-2);
+}
+
+.work-sans {
+  font-family: var(--ff-work-sans);
+  font-optical-sizing: auto;
+  font-style: normal;
 }
