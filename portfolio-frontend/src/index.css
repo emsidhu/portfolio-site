@@ -38,16 +38,7 @@
   --radius-10: 10px;
 }
 
-/* RESET */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* SCROLL BAR */
+/* RESET SCROLL BAR */
 html,
 body {
   scrollbar-width: none;
@@ -87,7 +78,7 @@ i {
   background-color: alpha(from var(--tomato) / 25%);
   border: 2px solid var(--tomato);
   font-size: var(--fs-4);
-  padding: 3px 10px;
+  padding: 0.2rem 0.625rem;
   transition: 0.2s ease-out;
   margin-top: 1rem;
 }
@@ -104,7 +95,6 @@ i {
   font-weight: 600;
   background-color: transparent;
   color: inherit;
-  padding: 1.5rem 2.75rem;
 }
 
 .nav-icon {
@@ -115,4 +105,9 @@ i {
   font-family: var(--ff-work-sans);
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+.orange-underline {
+  line-height: -3rem;
+  border-bottom: 2px solid var(--tomato);
 }
