@@ -9,13 +9,13 @@ function Home() {
     };
   }, []);
   return (
-    <div className="vh-100 d-flex flex-column text-center justify-content-center align-items-center">
-      <p className="work-sans fs-6xl">Hi, I'm Ekam Sidhu.</p>
-      <p className="work-sans fs-xl">
+    <div className="min-h-screen flex flex-col text-center justify-center items-center px-4">
+      <p className="font-work-sans text-6xl">Hi, I'm Ekam Sidhu.</p>
+      <p className="font-work-sans text-xl mt-2">
         Welcome to my corner of the web. <br />
         Explore my latest projects and what I'm building next.
       </p>
-      <a href="/projects" className="btn home-btn">
+      <a href="/projects" className="home-btn">
         View my work
       </a>
     </div>
