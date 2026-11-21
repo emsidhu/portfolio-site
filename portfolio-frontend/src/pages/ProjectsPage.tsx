@@ -1,7 +1,9 @@
+import CurrentProject from "../components/CurrentProject";
+
 function ProjectsPage() {
   return (
     <>
-      <div>ProjectsPage</div>
+      <CurrentProject />
     </>
   );
 }
