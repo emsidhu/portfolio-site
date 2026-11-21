@@ -3,7 +3,7 @@ import TechPill from "./TechPill";
 
 function CurrentProject() {
   return (
-    <div className="container mx-auto mt-4">
+    <div className="max-w-full sm:max-w-[90vw] md:max-w-[85vw] mx-auto mt-4">
       <SectionHeader text="Current Project" />
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 border rounded-3xl overflow-hidden">
@@ -30,7 +30,7 @@ function CurrentProject() {
               </a>
             </div>
           </div>
-          <p className="list-item list-disc ml-5 pt-1 text-md font-medium">Last Updated: [date]</p>
+          <p className="list-item list-disc ml-5 pt-1 text-md">Last Updated: [date]</p>
           <p className="pt-2 text-lg">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
