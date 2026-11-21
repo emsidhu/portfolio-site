@@ -14,16 +14,21 @@ function CurrentProject() {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="p-4 bg-linear-to-br from-orange-400 to-orange-600">
-          <div className="flex items-center flex-nowrap gap-2">
-            <h3 className="inline m-0 p-0 text-xl font-semibold">Title</h3>
-            <TechPill name="techName" />
-            <a className="ml-auto mr-2" href="">
-              <i className="bi bi-play-circle text-2xl" />
-            </a>
-            <a className="mr-1" href="https://github.com/emsidhu" target="_blank" rel="noreferrer">
-              <i className="bi bi-github text-2xl" />
-            </a>
+        <div className="p-4 bg-linear-to-br from-blue-300 to-blue-400">
+          <div className="grid grid-cols-2">
+            <div className="flex gap-2 items-center justify-self-start">
+              <h3 className="inline m-0 text-2xl font-bold">Title</h3>
+              <TechPill text="techName" />
+            </div>
+
+            <div className="flex justify-self-end text-2xl gap-2">
+              <a href="">
+                <i className="bi bi-play-circle" />
+              </a>
+              <a href="https://github.com/emsidhu" target="_blank" rel="noreferrer">
+                <i className="bi bi-github" />
+              </a>
+            </div>
           </div>
           <p className="list-item list-disc ml-5">Last Updated: [date]</p>
           <p>
