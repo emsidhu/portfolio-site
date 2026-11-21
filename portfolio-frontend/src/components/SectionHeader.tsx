@@ -1,7 +1,7 @@
 function SectionHeader({ text }: { text: string }) {
   return (
-    <div className="text-center mb-4 text-3xl font-semibold">
-      <h2 className="underline decoration-orange-500 mx-auto inline">{text}</h2>
+    <div className="underline decoration-orange-500 text-center text-4xl w-full md:text-5xl lg:text-6xl pt-10 md:pt-0 pb-4 font-extrabold">
+      {text}
     </div>
   );
 }
