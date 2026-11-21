@@ -35,6 +35,14 @@
 }
 
 @layer components {
+  .nav-icon {
+    @apply text-5xl;
+  }
+
+  .nav-link {
+    @apply hover:underline decoration-orange-500;
+  }
+
   .home-body {
     @apply bg-linear-to-br to-purple-300 via-cyan-300 from-orange-300  bg-no-repeat bg-fixed font-semibold;
   }

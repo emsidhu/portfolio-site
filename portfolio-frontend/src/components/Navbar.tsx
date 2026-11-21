@@ -10,13 +10,17 @@ function Navbar() {
       }`}
     >
       <div className="flex items-center gap-10">
-        <Link className="text-5xl" to="/">
+        <Link className="nav-icon" to="/">
           <i className="bi bi-house" />
         </Link>
-        <Link to="/projects">Projects</Link>
-        <Link to="/resume">Resume</Link>
+        <Link className="nav-link" to="/projects">
+          Projects
+        </Link>
+        <Link className="nav-link" to="/resume">
+          Resume
+        </Link>
       </div>
-      <a className="text-5xl" href="https://github.com/emsidhu">
+      <a className="nav-icon" href="https://github.com/emsidhu">
         <i className="bi bi-github"></i>
       </a>
     </nav>
