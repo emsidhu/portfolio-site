@@ -93,7 +93,7 @@ public class GitService {
 
     Pair<JsonNode, HttpStatusCode> result = makeRequest(url, false);
     JsonNode body = result.getFirst();
-    if (body == null || !body.isArray()) {
+    if (body.isNull() || !body.isArray()) {
       return Collections.emptyList();
     }
 
@@ -118,7 +118,7 @@ public class GitService {
   private ProjectDto toProject(JsonNode repository) {
     ProjectDto project = new ProjectDto();
     JsonNode id = repository.get("id");
-    if (id == null || !id.isNumber())
+    if (id.isNull() || !id.isNumber())
       throw new RuntimeException("invalid repository id recieved");
     project.setId(id.longValue());
 
@@ -143,7 +143,7 @@ public class GitService {
     Pair<JsonNode, HttpStatusCode> result = makeRequest(url, true);
     // Get README content from body and decode into plaintext
     JsonNode body = result.getFirst();
-    JsonNode content = body != null ? body.get("content") : null;
+    JsonNode content = body.isNull() ? null : body.get("content");
     String base64Content = content != null && !content.isNull() ? content.asString() : null;
     String plainTextContent = base64Content != null
         ? new String(Base64.getMimeDecoder().decode(base64Content), StandardCharsets.UTF_8)
@@ -163,7 +163,7 @@ public class GitService {
     Pair<JsonNode, HttpStatusCode> result = makeRequest(url, false);
     // Parse commit date as Instant after extracting from response body
     JsonNode body = result.getFirst();
-    String dateString = body != null && body.isArray() && body.size() > 0
+    String dateString = !body.isNull() && body.isArray() && body.size() > 0
         ? body.get(0).path("commit").path("author").path("date").asString()
         : null;
     Instant latestCommitDate = dateString != null && !dateString.isBlank()
