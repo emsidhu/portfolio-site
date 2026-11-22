@@ -35,9 +35,8 @@ public class ProjectService {
 
     // Define page element sorters
     Sort dateSort = Sort.by(Project::getLatestCommitDate).descending();
-    Sort idSort = Sort.by(Project::getId).ascending();
 
-    return projectRepo.findAll(PageRequest.of(page, size, dateSort.and(idSort)));
+    return projectRepo.findAll(PageRequest.of(page, size, dateSort));
   }
 
   public Project getProject(Long id) {
