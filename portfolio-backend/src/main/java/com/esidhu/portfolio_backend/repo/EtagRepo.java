@@ -9,8 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esidhu.portfolio_backend.model.Etag;
 
 public interface EtagRepo extends JpaRepository<Etag, String> {
-  @Modifying
+  @Modifying(clearAutomatically = true)
   @Transactional
-  @Query("UPDATE Etag e SET e.value = :value WHERE e.url = :url")
-  int updateValueByUrl(@Param("url") String url, @Param("value") String value);
+  @Query(value = """
+      INSERT INTO etags (url, value)
+      VALUES (:url, :value)
+      ON CONFLICT (url)
+      DO UPDATE SET value = EXCLUDED.value
+      """, nativeQuery = true)
+  void upsertEtag(@Param("url") String url, @Param("value") String value);
 }

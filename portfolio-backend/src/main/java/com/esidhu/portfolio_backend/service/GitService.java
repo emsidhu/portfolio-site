@@ -55,18 +55,10 @@ public class GitService {
           }).onStatus(status -> status.value() == 409, (_, _) -> {
           }).toEntity(JsonNode.class);
 
-      // Save etag value if it changed (or does not exist)
       if (response.getStatusCode() != HttpStatus.NOT_MODIFIED) {
         String newEtag = response.getHeaders().getETag();
         if (newEtag != null) {
-          int updatedRows = etagRepo.updateValueByUrl(url, newEtag);
-          if (updatedRows == 0) {
-            try {
-              etagRepo.save(new Etag(url, newEtag));
-            } catch (DataIntegrityViolationException ignored) {
-              etagRepo.updateValueByUrl(url, newEtag);
-            }
-          }
+          etagRepo.upsertEtag(url, newEtag);
         }
       }
 
