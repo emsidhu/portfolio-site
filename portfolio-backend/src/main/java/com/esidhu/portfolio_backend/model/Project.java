@@ -27,9 +27,6 @@ public class Project {
   private String name;
   private String owner;
   private String description;
-  @Lob
-  @Column(name = "content")
-  private String readMeContent;
   private Instant latestCommitDate;
   private String title;
   private String photoUrl;

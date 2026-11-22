@@ -134,24 +134,6 @@ public class GitService {
     return value != null && !value.isNull() ? value.asString() : null;
   }
 
-  public @Nullable Pair<String, HttpStatusCode> getRepoReadMe(Long id) {
-    String url = UriComponentsBuilder.fromUriString(GITHUB_API_URL)
-        .path("/repositories/{id}/readme")
-        .buildAndExpand(id)
-        .toUriString();
-
-    Pair<JsonNode, HttpStatusCode> result = makeRequest(url, true);
-    // Get README content from body and decode into plaintext
-    JsonNode body = result.getFirst();
-    JsonNode content = body.isNull() ? null : body.get("content");
-    String base64Content = content != null && !content.isNull() ? content.asString() : null;
-    String plainTextContent = base64Content != null
-        ? new String(Base64.getMimeDecoder().decode(base64Content), StandardCharsets.UTF_8)
-        : "";
-
-    return Pair.of(plainTextContent, result.getSecond());
-  }
-
   public @Nullable Instant getRepoLatestCommitDate(Long id) {
 
     String url = UriComponentsBuilder.fromUriString(GITHUB_API_URL)

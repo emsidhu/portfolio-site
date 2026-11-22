@@ -83,17 +83,6 @@ public class ProjectService {
     Long id = projectDto.getId();
 
     projectDto.setLatestCommitDate(gitService.getRepoLatestCommitDate(id));
-    // Project update ignores null fields in new project object,
-    // so no need to check modified status for commit date or README content
-    // However repo might not have README, so check for 404 status
-    Pair<String, HttpStatusCode> readMeResponse = gitService.getRepoReadMe(id);
-    boolean readMeModified = readMeResponse.getSecond() != HttpStatus.NOT_MODIFIED;
-    boolean readMeExists = readMeResponse.getSecond() != HttpStatus.NOT_FOUND;
-    if (readMeExists) {
-      projectDto.setReadMeContent(readMeResponse.getFirst());
-    } else {
-      projectDto.setReadMeContent(null);
-    }
 
     // Update project in DB
     Optional<Project> existingProject = projectRepo.findById(id);
@@ -106,16 +95,12 @@ public class ProjectService {
       if (projectDto.getLatestCommitDate() != null) {
         updatedProject.setLatestCommitDate(projectDto.getLatestCommitDate());
       }
-      if (readMeModified) {
-        updatedProject.setReadMeContent(projectDto.getReadMeContent());
-      }
     } else {
       updatedProject = Project.builder()
           .id(projectDto.getId())
           .name(projectDto.getName())
           .owner(projectDto.getOwner())
           .description(projectDto.getDescription())
-          .readMeContent(projectDto.getReadMeContent())
           .latestCommitDate(projectDto.getLatestCommitDate())
           .build();
     }

@@ -18,6 +18,5 @@ public class ProjectDto {
   private String name;
   private String owner;
   private String description;
-  private String readMeContent;
   private Instant latestCommitDate;
 }
