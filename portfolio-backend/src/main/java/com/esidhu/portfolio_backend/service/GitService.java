@@ -20,8 +20,8 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.esidhu.portfolio_backend.dto.ProjectDto;
 import com.esidhu.portfolio_backend.model.Etag;
-import com.esidhu.portfolio_backend.model.Project;
 import com.esidhu.portfolio_backend.repo.EtagRepo;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.node.JsonNodeFactory;
@@ -80,26 +80,31 @@ public class GitService {
     }
   }
 
-  public @Nullable Pair<List<Project>, HttpStatusCode> getAllRepos() {
+  public List<ProjectDto> getAllRepos(int page, int size) {
+    List<ProjectDto> projects = new ArrayList<>();
+
+    // GET projects in pages so etag differences from one repo
+    // changing don't cause all projects to be returned again
     String url = UriComponentsBuilder.fromUriString(GITHUB_API_URL)
         .path("/user/repos")
+        .queryParam("per_page", size)
+        .queryParam("page", page)
         .toUriString();
 
     Pair<JsonNode, HttpStatusCode> result = makeRequest(url, false);
     JsonNode body = result.getFirst();
     if (body == null || !body.isArray()) {
-      return Pair.of(Collections.emptyList(), result.getSecond());
+      return Collections.emptyList();
     }
 
-    // Convert Json to list of projects
-    List<Project> projects = new ArrayList<>();
     for (JsonNode repository : body) {
       projects.add(toProject(repository));
     }
-    return Pair.of(projects, result.getSecond());
+
+    return projects;
   }
 
-  public Pair<Optional<Project>, HttpStatusCode> getRepo(Long id) {
+  public Pair<Optional<ProjectDto>, HttpStatusCode> getRepo(Long id) {
     String url = UriComponentsBuilder.fromUriString(GITHUB_API_URL)
         .path("/repositories/{id}")
         .buildAndExpand(id)
@@ -110,8 +115,8 @@ public class GitService {
     return Pair.of(Optional.ofNullable(body != null && !body.isNull() ? toProject(body) : null), result.getSecond());
   }
 
-  private Project toProject(JsonNode repository) {
-    Project project = new Project();
+  private ProjectDto toProject(JsonNode repository) {
+    ProjectDto project = new ProjectDto();
     JsonNode id = repository.get("id");
     if (id == null || !id.isNumber())
       throw new RuntimeException("invalid repository id recieved");

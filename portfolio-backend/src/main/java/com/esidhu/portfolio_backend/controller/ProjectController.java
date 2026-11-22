@@ -21,7 +21,7 @@ public class ProjectController {
 
   @GetMapping
   public Page<Project> getProjects(@RequestParam(defaultValue = "0") int page,
-      @RequestParam(defaultValue = "10") int size) {
+      @RequestParam(defaultValue = "99") int size) {
     return projectService.getAllProjects(page, size);
   }
 
