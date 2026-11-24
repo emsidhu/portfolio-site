@@ -1,5 +1,7 @@
 package com.esidhu.portfolio_backend.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +32,32 @@ public class ProjectController {
     return projectService.getProject(id);
   }
 
+  @GetMapping("/active")
+  public Page<Project> getActiveProjects(@RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "99") int size) {
+    return projectService.getActiveProjects(page, size);
+  }
+
+  @GetMapping("/featured")
+  public List<Project> getFeaturedProjects() {
+    return projectService.getFeaturedProjects();
+  }
+
+  @GetMapping("/current")
+  public Project getCurrentProject() {
+    return projectService.getCurrentProject();
+  }
+
+  @PatchMapping("/{id}/active")
+  public ResponseEntity<Project> setProjectActive(@PathVariable Long id,
+      @RequestParam Boolean value) {
+    return ResponseEntity.ok().body(projectService.setProjectActive(id, value));
+  }
+
   @PatchMapping("/{id}/featured")
-  public ResponseEntity<Project> updateProjectFeaturedStatus(@PathVariable Long id,
-      @RequestParam Boolean isFeatured) {
-    return ResponseEntity.ok().body(projectService.setProjectFeatured(id, isFeatured));
+  public ResponseEntity<Project> setProjectFeatured(@PathVariable Long id,
+      @RequestParam Boolean value) {
+    return ResponseEntity.ok().body(projectService.setProjectFeatured(id, value));
   }
 
   // Sets project with given id to current and removes current status from

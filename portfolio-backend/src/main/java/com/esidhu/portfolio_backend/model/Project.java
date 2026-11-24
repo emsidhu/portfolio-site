@@ -26,6 +26,7 @@ public class Project {
   private String name;
   private String owner;
   private String description;
+  private String featuredDescription;
   private Instant latestCommitDate;
   private String title;
   private String photoUrl;

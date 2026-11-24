@@ -10,6 +10,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.esidhu.portfolio_backend.dto.ProjectDto;
 import com.esidhu.portfolio_backend.model.Project;
@@ -26,38 +27,87 @@ import lombok.extern.slf4j.Slf4j;
 public class ProjectService {
   private final ProjectRepo projectRepo;
   private final GitService gitService;
+  private final Sort dateSort = Sort.by(Project::getLatestCommitDate).descending();
+  private final Sort idSort = Sort.by(Project::getId);
 
   public Page<Project> getAllProjects(int page, int size) {
+    // Update the info for all the modified projects in this page
     // Add 1 to page since git API pages start at 1
     List<ProjectDto> modifiedProjects = gitService.getAllRepos(page + 1, size);
-    // Update all the modified projects
     modifiedProjects.forEach(this::updateProject);
 
-    // Define page element sorters
-    Sort dateSort = Sort.by(Project::getLatestCommitDate).descending();
-
-    return projectRepo.findAll(PageRequest.of(page, size, dateSort));
+    return projectRepo.findAll(PageRequest.of(page, size, dateSort.and(idSort)));
   }
 
   public Project getProject(Long id) {
     Pair<Optional<ProjectDto>, HttpStatusCode> response = gitService.getRepo(id);
     // Update project with new data if it was modified since last GET
     if (response.getSecond() != HttpStatus.NOT_MODIFIED)
-      updateProject(response.getFirst().orElseThrow(() -> new RuntimeException("Project does not exist")));
+      updateProject(response.getFirst().orElseThrow(() -> new ResponseStatusException(
+          HttpStatus.NOT_FOUND, "Project not found")));
 
-    return projectRepo.findById(id).orElseThrow(() -> new RuntimeException("Project not found"));
+    return projectRepo.findById(id).orElseThrow(() -> new ResponseStatusException(
+        HttpStatus.NOT_FOUND, "Project not found"));
+  }
+
+  public Page<Project> getActiveProjects(int page, int size) {
+    List<Long> activeIdList = projectRepo.findActiveIds();
+    List<ProjectDto> modifiedProjects = gitService.getListOfRepos(activeIdList);
+    modifiedProjects.forEach(this::updateProject);
+
+    Sort dateSort = Sort.by(Project::getLatestCommitDate).descending();
+    Sort idSort = Sort.by(Project::getId);
+    return projectRepo.findByIsActive(true, PageRequest.of(page, size, dateSort.and(idSort)));
+  }
+
+  public List<Project> getFeaturedProjects() {
+    List<Long> featuredIdList = projectRepo.findFeaturedIds();
+    List<ProjectDto> modifiedProjects = gitService.getListOfRepos(featuredIdList);
+    modifiedProjects.forEach(this::updateProject);
+
+    return projectRepo.findByIsFeatured(true, dateSort.and(idSort));
+  }
+
+  public Project getCurrentProject() {
+    Long currentId = projectRepo.findCurrentProjectId()
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Current project does not exist"));
+
+    Pair<Optional<ProjectDto>, HttpStatusCode> response = gitService.getRepo(currentId);
+    if (response.getSecond() != HttpStatus.NOT_MODIFIED) {
+      updateProject(response.getFirst()
+          .orElseThrow(() -> new ResponseStatusException(
+              HttpStatus.NOT_FOUND, "Current project does not exist")));
+    }
+
+    return projectRepo.findByIsCurrent(true)
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Current project does not exist"));
+  }
+
+  public Project setProjectActive(Long id, Boolean value) {
+    log.info("Setting project {} isActive to {}", id, value);
+    Project project = projectRepo.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Project not found"));
+
+    project.setIsActive(value);
+    return projectRepo.save(project);
   }
 
   public Project setProjectFeatured(Long id, Boolean value) {
     log.info("Setting project {} isFeatured to {}", id, value);
     Project project = projectRepo.findById(id)
-        .orElseThrow(() -> new RuntimeException("Project not found"));
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Project not found"));
 
     // Only check limit if setting 'isFeatured' to true and it isn't already true
     if (Boolean.TRUE.equals(value) && !Boolean.TRUE.equals(project.getIsFeatured())) {
-      List<Project> currentFeatured = projectRepo.findAllFeaturedForUpdate();
+      List<Project> currentFeatured = projectRepo.findAllFeatured();
       if (currentFeatured.size() >= 3) {
-        throw new IllegalStateException("Cannot feature more than 3 projects at once.");
+        throw new ResponseStatusException(
+            HttpStatus.CONFLICT,
+            "Cannot feature more than 3 projects at once.");
       }
     }
 
@@ -65,7 +115,6 @@ public class ProjectService {
     return projectRepo.save(project);
   }
 
-  @Transactional
   public Project setProjectCurrent(Long id) {
     log.info("Setting project {} to current", id);
 
@@ -74,7 +123,8 @@ public class ProjectService {
     projectRepo.flush();
 
     Project project = projectRepo.findById(id)
-        .orElseThrow(() -> new RuntimeException("Project not found"));
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, "Project not found"));
     project.setIsCurrent(true);
     return projectRepo.save(project);
   }
