@@ -1,12 +1,23 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getProjects } from "./projectService";
+import { getActiveProjects, getFeaturedProjects, getCurrentProject } from "./projectService";
 
-export const projectsQueryOptions = (page = 0, size = 10) =>
+export const activeProjectsQueryOptions = (page = 0, size = 10) =>
   queryOptions({
-    queryKey: ["projects", page, size],
-    queryFn: async () => {
-      const { data } = await getProjects(page, size);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryKey: ["activeProjects", page, size],
+    queryFn: () => getActiveProjects(page, size),
+    staleTime: 1000 * 60 * 10,
+  });
+
+export const featuredProjectsQueryOptions = () =>
+  queryOptions({
+    queryKey: ["featuredProjects"],
+    queryFn: getFeaturedProjects,
+    staleTime: 1000 * 60 * 10,
+  });
+
+export const currentProjectQueryOptions = () =>
+  queryOptions({
+    queryKey: ["currentProject"],
+    queryFn: getCurrentProject,
+    staleTime: 1000 * 60 * 10,
   });
