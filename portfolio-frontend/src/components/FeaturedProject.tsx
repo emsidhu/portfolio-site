@@ -1,16 +1,20 @@
 import TechPill from "./TechPill";
+import type { Project as ProjectData } from "../api/projectService.ts";
 
-function FeaturedProject() {
+function FeaturedProject({ project }: { project: ProjectData }) {
   return (
     <div className="col-span-12 lg:col-span-4 m-4 rounded-3xl overflow-hidden text-black">
       <div className="relative border-b">
         <img
-          src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg"
+          src={project.photoUrl ?? undefined}
           alt="Project Image"
           className="w-full max-h-[40lvw] md:max-h-[30lvw] lg:max-h-full object-cover"
         />
         <span className="absolute top-2 right-2">
-          <TechPill text={"technology"} />
+          {project.technologies &&
+            project.technologies.map((technology) => (
+              <TechPill key={technology} text={technology} />
+            ))}
         </span>
       </div>
       <div className="grid grid-rows-2 p-2 lg:px-1 lg:pb-0 text-gray-900 bg-linear-to-br from-purple-300 to-purple-400">
@@ -19,14 +23,16 @@ function FeaturedProject() {
             <i className="bi bi-play-circle" />
           </a>
 
-          <h3 className="text-center">Randoop Recreation</h3>
+          <h3 className="text-center">{project.name}</h3>
 
           <a className="flex justify-self-end" href="" target="_blank" rel="noreferrer">
             <i className="bi bi-github" />
           </a>
         </div>
 
-        <p className="text-center mt-2 pb-1 lg:pb-2 text-xl font-bold">Description</p>
+        <p className="text-center mt-2 pb-1 lg:pb-2 text-xl font-bold">
+          {project.featuredDescription}
+        </p>
       </div>
     </div>
   );
