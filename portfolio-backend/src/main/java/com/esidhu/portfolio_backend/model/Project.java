@@ -1,6 +1,8 @@
 package com.esidhu.portfolio_backend.model;
 
 import java.time.Instant;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,6 +31,7 @@ public class Project {
   private String featuredDescription;
   private Instant latestCommitDate;
   private String title;
+  private List<String> technologies;
   private String photoUrl;
   @Builder.Default
   private Boolean isActive = false;
