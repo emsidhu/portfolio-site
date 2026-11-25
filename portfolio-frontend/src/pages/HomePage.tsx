@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
-import Cube from "../meshes/Cube";
+import WireframeCube from "../meshes/WireframeCube";
 
 function Home() {
   useEffect(() => {
@@ -14,14 +14,12 @@ function Home() {
   }, []);
   return (
     <>
-      <div className="min-h-screen flex flex-col text-center justify-center items-center px-4">
+      <div className="min-h-screen flex flex-col text-center justify-center items-center px-4 [text-shadow:0_2px_6px_rgba(0,0,0,0.65)]">
         <div className="absolute inset-0 -z-10">
           <Canvas>
             <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-            <ambientLight intensity={0.5} />
-            <directionalLight intensity={1} position={[0, 0, 10]} />
-            {/* <pointLight intensity={} /> */}
-            <Cube scale={2} />
+
+            <WireframeCube scale={3} />
           </Canvas>
         </div>
         <p className="font-work-sans text-6xl font-extrabold">Hi, I'm Ekam Sidhu.</p>
