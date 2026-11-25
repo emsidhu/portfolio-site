@@ -9,7 +9,7 @@ function FeaturedWork() {
   return (
     <div className="p-4 md:p-20 bg-gray-900 text-gray-50">
       <SectionHeader text="Featured Work" />
-      <div className="grid grid-cols-12">
+      <div className="text-gray-900 grid grid-cols-12">
         {isPending ? (
           <div>Loading Projects...</div>
         ) : isError ? (

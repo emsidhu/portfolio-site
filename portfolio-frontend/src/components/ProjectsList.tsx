@@ -41,10 +41,10 @@ function ProjectsList() {
   }, [isError, isPending, projectPage]);
 
   return (
-    <div ref={projectsSectionRef} className="container mx-auto mt-8">
+    <div ref={projectsSectionRef} className="container mx-auto mt-8 text-gray-900">
       <div className="grid grid-cols-[1fr_auto_1fr] items-center">
         <div />
-        <div className="flexjustify-center">
+        <div className="flex justify-center">
           <SectionHeader text="All Projects" />
         </div>
         {/* For when I have more stuff in the list :) */}

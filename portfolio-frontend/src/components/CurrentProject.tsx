@@ -11,7 +11,7 @@ function CurrentProject() {
   }
 
   return (
-    <div className="max-w-full sm:max-w-[90vw] md:max-w-[85vw] mx-auto mt-4">
+    <div className="text-gray-900 max-w-full sm:max-w-[90vw] md:max-w-[85vw] mx-auto mt-4">
       <SectionHeader text="Next Project" />
 
       <div className="w-full grid grid-cols-1 md:grid-cols-2 border rounded-3xl overflow-hidden">
