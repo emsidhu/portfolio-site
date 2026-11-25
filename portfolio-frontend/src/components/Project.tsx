@@ -3,7 +3,7 @@ import type { Project as ProjectData } from "../api/projectService";
 
 function Project({ project }: { project: ProjectData }) {
   return (
-    <div className="w-full border rounded-3xl overflow-hidden">
+    <div className="w-full border rounded-3xl mb-5 overflow-hidden">
       <div className="border-b">
         <img
           src={project.photoUrl ?? undefined}

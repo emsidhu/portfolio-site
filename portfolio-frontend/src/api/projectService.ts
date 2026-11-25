@@ -16,28 +16,35 @@ export interface Project {
   isCurrent: boolean;
 }
 
+export interface PageInfo {
+  number: number;
+  totalElements: number;
+  totalPages: number;
+}
+
 export interface ProjectPage {
   content: Project[];
+  page: PageInfo;
 }
 
 export async function getActiveProjects(page = 0, size = 10) {
   const response = await axios.get<ProjectPage>(`${API_URL}/active?page=${page}&size=${size}`);
-  return response.data.content;
+  return response.data;
 }
 
 export async function getFeaturedProjects() {
   const response = await axios.get<Project[]>(`${API_URL}/featured`);
-  return response.data
+  return response.data;
 }
 
 export async function getCurrentProject() {
   const response = await axios.get<Project>(`${API_URL}/current`);
-  return response.data
+  return response.data;
 }
 
 export async function getProject(id: string) {
   const response = await axios.get<Project>(`${API_URL}/${id}`);
-  return response.data
+  return response.data;
 }
 
 export async function setProjectFeatured(id: string, isFeatured: boolean) {
