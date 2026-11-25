@@ -37,10 +37,13 @@ function WireframeCube(props: ThreeElements["group"]) {
       cube.current.rotation.y += 0.0015;
     }
   });
+
   return (
     <group {...props} ref={cube}>
+      {/* Thicker black lines to outline the gradient */}
       <Line points={points} segments color="#111827" lineWidth={20} depthWrite={false} />
-      <Line points={points} vertexColors={vertexColors} segments lineWidth={15} />
+
+      <Line points={points} segments vertexColors={vertexColors} lineWidth={15} />
     </group>
   );
 }

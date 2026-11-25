@@ -22,10 +22,18 @@ function Project({ project }: { project: ProjectData }) {
           </div>
 
           <div className="flex justify-self-end text-3xl gap-2">
-            <a href="">
-              <i className="bi bi-play-circle" />
+            <a href={`${project.runUrl}`}>
+              {project.isDownload ? (
+                <i className="bi bi-download" />
+              ) : (
+                <i className="bi bi-play-circle" />
+              )}
             </a>
-            <a href="https://github.com/emsidhu" target="_blank" rel="noreferrer">
+            <a
+              href={`https://github.com/${project.owner}/${project.name}`}
+              target="_blank"
+              rel="noreferrer"
+            >
               <i className="bi bi-github" />
             </a>
           </div>
@@ -33,7 +41,9 @@ function Project({ project }: { project: ProjectData }) {
         <p className="list-item list-disc ml-5 pt-1 text-md">
           Last Updated: {project.latestCommitDate}
         </p>
-        <p className="pt-1 text-lg">{project.description}</p>
+        <p className="pt-1 text-lg">
+          {project.descriptionOverride == null ? project.description : project.descriptionOverride}
+        </p>
       </div>
     </div>
   );

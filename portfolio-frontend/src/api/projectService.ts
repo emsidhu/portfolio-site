@@ -4,13 +4,17 @@ const API_URL = "http://localhost:8080/projects";
 
 export interface Project {
   id: number;
-  name: string | null
+  name: string | null;
+  owner: string | null;
   title: string | null;
   description: string | null;
+  descriptionOverride: string | null;
   featuredDescription: string | null;
   latestCommitDate: string | null;
   technologies: string[];
   photoUrl: string | null;
+  runUrl: string | null;
+  isDownload: boolean;
   isActive: boolean;
   isFeatured: boolean;
   isCurrent: boolean;

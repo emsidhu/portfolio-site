@@ -19,13 +19,22 @@ function FeaturedProject({ project }: { project: ProjectData }) {
       </div>
       <div className="grid grid-rows-2 p-2 lg:px-1 lg:pb-0 text-gray-900 bg-linear-to-br from-purple-300 to-purple-400">
         <div className="grid grid-cols-[1fr_auto_1fr] items-center text-3xl font-extrabold px-2">
-          <a className="justify-self-start" href="">
-            <i className="bi bi-play-circle" />
+          <a href={`${project.runUrl}`}>
+            {project.isDownload ? (
+              <i className="bi bi-download" />
+            ) : (
+              <i className="bi bi-play-circle" />
+            )}
           </a>
 
           <h3 className="text-center">{project.name}</h3>
 
-          <a className="flex justify-self-end" href="" target="_blank" rel="noreferrer">
+          <a
+            className="flex justify-self-end"
+            href={`https://github.com/${project.owner}/${project.name}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             <i className="bi bi-github" />
           </a>
         </div>

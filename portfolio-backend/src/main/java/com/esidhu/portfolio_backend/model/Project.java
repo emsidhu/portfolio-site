@@ -28,11 +28,15 @@ public class Project {
   private String name;
   private String owner;
   private String description;
+  private String descriptionOverride;
   private String featuredDescription;
   private Instant latestCommitDate;
   private String title;
   private List<String> technologies;
   private String photoUrl;
+  private String runUrl;
+  @Builder.Default
+  private Boolean isDownload = false;
   @Builder.Default
   private Boolean isActive = false;
   @Builder.Default
