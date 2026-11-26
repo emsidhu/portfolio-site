@@ -15,7 +15,7 @@ permissions:
 env:
   REGION: us-west1
   SERVICE_NAME: portfolio-backend
-  REPO_NAME: portfolio-repo
+  REPO_NAME: portfolio-site
 
 jobs:
   deploy:
@@ -54,3 +54,4 @@ jobs:
           env_vars: |
             DB_URL=${{ secrets.DB_URL }}
             GIT_API_PAT=${{ secrets.GIT_API_PAT }}
+            CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}
