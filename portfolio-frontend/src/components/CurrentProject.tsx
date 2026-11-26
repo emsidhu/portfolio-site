@@ -32,7 +32,7 @@ function CurrentProject() {
                 ))}
             </div>
 
-            <div className="flex justify-self-end text-2xl gap-2">
+            <div className="flex justify-self-end text-3xl gap-2">
               <a href={`${project.runUrl}`}>
                 {project.isDownload ? (
                   <i className="bi bi-download" />
