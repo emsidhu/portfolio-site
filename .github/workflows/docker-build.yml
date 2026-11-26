@@ -1,4 +1,4 @@
-name: Build and Push GraalVM Docker Image
+name: Build and Deploy to Google Cloud Run
 
 on:
   push:
@@ -10,25 +10,47 @@ on:
 
 permissions:
   contents: read
-  packages: write
+  id-token: write
+
+env:
+  REGION: us-west1
+  SERVICE_NAME: portfolio-backend
+  REPO_NAME: portfolio-repo
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: github-deployer@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.com
 
-      - name: Build and push Docker image
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build and push GraalVM Docker image
         uses: docker/build-push-action@v6
         with:
           context: ./portfolio-backend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/portfolio-backend:latest
+          tags: |
+            ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
+            ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.SERVICE_NAME }}:latest
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE_NAME }}
+          region: ${{ env.REGION }}
+          image: ${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
+          flags: |
+            --allow-unauthenticated
+            --memory=512Mi
+          env_vars: |
+            DB_URL=${{ secrets.DB_URL }}
+            GIT_API_PAT=${{ secrets.GIT_API_PAT }}
