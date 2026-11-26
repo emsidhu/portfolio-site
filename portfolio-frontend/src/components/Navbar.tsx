@@ -49,9 +49,6 @@ function Navbar() {
           <Link className="nav-link" to="/projects">
             Projects
           </Link>
-          <Link className="nav-link" to="/resume">
-            Resume
-          </Link>
         </div>
         <a className="nav-icon" href="https://github.com/emsidhu">
           <i className="bi bi-github"></i>
