@@ -10,6 +10,7 @@ COPY .mvn .mvn
 RUN chmod +x mvnw
 
 COPY src ./src
+ENV NATIVE_IMAGE_OPTIONS="-J-Xmx5g --parallelism=4"
 RUN ./mvnw -Pnative native:compile -DskipTests
 
 # Stage 2: Minimal Linux runtime (no JVM needed)
