@@ -12,12 +12,6 @@
 
 /* Resets */
 @layer base {
-  html,
-  body {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
   body {
     @apply font-poppins bg-white leading-normal antialiased;
   }
@@ -44,6 +38,17 @@
   .home-body {
     @apply text-gray-50 bg-home-gradient bg-no-repeat bg-fixed;
   }
+}
+
+html.home-body,
+body.home-body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.home-body::-webkit-scrollbar,
+body.home-body::-webkit-scrollbar {
+  display: none;
 }
 
 .navbar {
