@@ -1,7 +1,9 @@
 package com.esidhu.portfolio_backend.config;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -26,12 +28,16 @@ import static org.springframework.http.HttpMethod.PUT;
 
 @Configuration
 public class CorsConfig {
+
+  @Value("${cors.allowed-origins:http://localhost:5173}")
+  private String[] allowedOrigins;
+
   @Bean
   public CorsFilter corsFilter() {
     var urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
     var corsConfiguration = new CorsConfiguration();
     corsConfiguration.setAllowCredentials(true);
-    corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+    corsConfiguration.setAllowedOrigins(Arrays.asList(allowedOrigins));
 
     corsConfiguration.setAllowedHeaders(
         List.of(ORIGIN, ACCESS_CONTROL_ALLOW_ORIGIN, CONTENT_TYPE, ACCEPT, AUTHORIZATION, X_REQUESTED_WITH,
