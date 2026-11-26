@@ -11,15 +11,15 @@ function CurrentProject() {
   }
 
   return (
-    <div className="text-gray-900 max-w-full sm:max-w-[90vw] md:max-w-[85vw] mx-auto mt-4">
+    <div className="text-gray-900 max-w-full sm:max-w-[90vw] md:max-w-[85vw] mx-auto mt-4 px-3">
       <SectionHeader text="Next Project" />
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 border rounded-3xl overflow-hidden">
-        <div className="border-b md:border-r">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 md:max-h-[60vh] border rounded-3xl overflow-hidden">
+        <div className="relative min-h-80 border-b md:border-r">
           <img
             src={project.photoUrl ?? undefined}
             alt="Project Image"
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </div>
         <div className="p-4 bg-linear-to-br from-blue-300 to-blue-400">
