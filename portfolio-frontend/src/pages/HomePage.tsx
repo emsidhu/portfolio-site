@@ -68,7 +68,7 @@ function Home() {
 
         <Link
           to="/projects"
-          className="pointer-events-auto row-start-3 mt-10 self-start rounded-lg border border-cyan-100/70 bg-linear-to-r from-cyan-300/15 to-violet-300/20 px-3 py-1.5 text-4xl text-white shadow-[0_0_18px_rgba(196,181,253,0.18)] transition-colors duration-200 hover:border-violet-100 hover:from-cyan-300/25 hover:to-violet-300/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-100 motion-reduce:transition-none"
+          className="pointer-events-auto row-start-3 mt-10 self-start rounded-lg border border-cyan-100/70 bg-linear-to-r from-cyan-300/15 to-violet-300/20 px-3 py-1.5 text-4xl text-white shadow-[0_0_18px_rgba(196,181,253,0.18)] transition-colors duration-200 hover:border-violet-100 hover:from-cyan-300/25 hover:to-violet-300/30 focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-cyan-100 motion-reduce:transition-none"
         >
           View my work
         </Link>
