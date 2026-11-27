@@ -23,16 +23,18 @@ function CurrentProject() {
           />
         </div>
         <div className="p-4 bg-linear-to-br from-blue-300 to-blue-400">
-          <div className="grid grid-cols-2">
-            <div className="flex gap-2 items-center justify-self-start">
-              <h3 className="inline m-0 text-2xl font-bold">{project.name}</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex min-w-0 flex-wrap items-center gap-2">
+              <h3 className="inline m-0 text-2xl font-bold">
+                {project.title === null ? project.name : project.title}
+              </h3>
               {project.technologies &&
                 project.technologies.map((technology) => (
                   <TechPill key={technology} text={technology} />
                 ))}
             </div>
 
-            <div className="flex justify-self-end text-3xl gap-2">
+            <div className="ml-auto flex shrink-0 items-center gap-2 text-3xl">
               <a href={`${project.runUrl}`}>
                 {project.isDownload ? (
                   <i className="bi bi-download" />
@@ -52,7 +54,7 @@ function CurrentProject() {
           <p className="list-item list-disc ml-5 pt-1 text-md">
             Last Updated: {project.latestCommitDate}
           </p>
-          <p className="pt-2 text-lg">
+          <p className="pt-2 text-lg whitespace-pre-line">
             {project.descriptionOverride == null
               ? project.description
               : project.descriptionOverride}

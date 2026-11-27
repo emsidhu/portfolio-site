@@ -1,4 +1,3 @@
-import TechPill from "./TechPill";
 import type { Project as ProjectData } from "../api/projectService.ts";
 
 function FeaturedProject({ project }: { project: ProjectData }) {
@@ -10,12 +9,6 @@ function FeaturedProject({ project }: { project: ProjectData }) {
           alt="Project Image"
           className="w-full max-h-[40lvw] md:max-h-[30lvw] lg:max-h-full object-cover"
         />
-        <span className="absolute top-2 right-2">
-          {project.technologies &&
-            project.technologies.map((technology) => (
-              <TechPill key={technology} text={technology} />
-            ))}
-        </span>
       </div>
       <div className="grid grid-rows-2 p-2 lg:px-1 lg:pb-0 text-gray-900 bg-linear-to-br from-purple-300 to-purple-400">
         <div className="grid grid-cols-[1fr_auto_1fr] items-center text-3xl font-extrabold px-2">
@@ -27,7 +20,7 @@ function FeaturedProject({ project }: { project: ProjectData }) {
             )}
           </a>
 
-          <h3 className="text-center">{project.name}</h3>
+          <h3 className="text-center">{project.title === null ? project.name : project.title}</h3>
 
           <a
             className="flex justify-self-end"
@@ -39,7 +32,7 @@ function FeaturedProject({ project }: { project: ProjectData }) {
           </a>
         </div>
 
-        <p className="text-center mt-2 pb-1 lg:pb-2 text-xl font-bold">
+        <p className="text-center mt-2 pb-1 lg:pb-2 text-xl font-bold whitespace-pre-line">
           {project.featuredDescription}
         </p>
       </div>
