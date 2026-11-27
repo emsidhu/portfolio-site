@@ -4,11 +4,11 @@ import ProjectRunLink from "./ProjectRunLink";
 function FeaturedProject({ project }: { project: ProjectData }) {
   return (
     <div className="col-span-12 lg:col-span-4 m-4 rounded-3xl overflow-hidden text-black">
-      <div className="relative border-b">
+      <div className="relative min-h-80 border-b md:border-r">
         <img
           src={project.photoUrl ?? undefined}
           alt="Project Image"
-          className="text-gray-50 w-full max-h-[40lvw] md:max-h-[30lvw] lg:max-h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
       <div className="flex flex-col gap-1 rounded-b-3xl p-2 lg:px-1 lg:pb-0 text-gray-900 bg-linear-to-br from-purple-300 to-purple-400">
