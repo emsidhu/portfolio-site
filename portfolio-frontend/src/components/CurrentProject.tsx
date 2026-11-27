@@ -8,7 +8,7 @@ function CurrentProject() {
 
   return (
     <div className="text-gray-900 max-w-full sm:max-w-[90vw] md:max-w-[85vw] mx-auto mt-4 px-3">
-      <SectionHeader text="Next Project" />
+      <SectionHeader text="Current Project" />
 
       {isPending ? (
         "Loading..."
