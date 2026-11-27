@@ -3,6 +3,8 @@ package com.esidhu.portfolio_backend.service;
 import static com.esidhu.portfolio_backend.constant.Constant.GITHUB_API_URL;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -113,7 +115,7 @@ public class GitService {
     return value != null && !value.isNull() ? value.asString() : null;
   }
 
-  public @Nullable Instant getRepoLatestCommitDate(Long id) {
+  public @Nullable LocalDate getRepoLatestCommitDate(Long id) {
 
     String url = UriComponentsBuilder.fromUriString(GITHUB_API_URL)
         .path("/repositories/{id}/commits")
@@ -127,8 +129,8 @@ public class GitService {
     String dateString = !body.isNull() && body.isArray() && body.size() > 0
         ? body.get(0).path("commit").path("author").path("date").asString()
         : null;
-    Instant latestCommitDate = dateString != null && !dateString.isBlank()
-        ? Instant.parse(dateString)
+    LocalDate latestCommitDate = dateString != null && !dateString.isBlank()
+        ? Instant.parse(dateString.strip()).atZone(ZoneOffset.UTC).toLocalDate()
         : null;
 
     // No need to check for 304 status externally as it will only ever be null if
