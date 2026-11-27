@@ -2,17 +2,28 @@ import TechPill from "./TechPill";
 import ProjectRunLink from "./ProjectRunLink";
 import type { Project as ProjectData } from "../api/projectService";
 
-function Project({ project }: { project: ProjectData }) {
+function Project({
+  project,
+  variant = "default",
+}: {
+  project: ProjectData;
+  variant?: "default" | "current";
+}) {
+  const backgroundColor =
+    variant === "current"
+      ? "bg-linear-to-br from-amber-500 to-orange-500"
+      : "bg-linear-to-br from-blue-300 to-blue-400";
+
   return (
-    <div className="w-full border rounded-3xl mb-5 overflow-hidden">
-      <div className="border-b">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 border rounded-3xl mb-5 overflow-hidden">
+      <div className="relative min-h-80 border-b md:border-r">
         <img
           src={project.photoUrl ?? undefined}
           alt="Project Image"
-          className="w-full max-h-[40lvw] md:max-h-[30lvw] xl:max-h-[20lvw] object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
-      <div className="p-4 bg-linear-to-br from-blue-300 to-blue-400">
+      <div className={`p-4 ${backgroundColor}`}>
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
             <h3 className="inline m-0 text-2xl font-bold">
@@ -38,8 +49,8 @@ function Project({ project }: { project: ProjectData }) {
         <p className="list-item list-disc ml-5 pt-1 text-md">
           Last Updated: {project.latestCommitDate}
         </p>
-        <p className="pt-1 text-lg whitespace-pre-line">
-          {project.descriptionOverride == null ? project.description : project.descriptionOverride}
+        <p className="pt-2 text-lg whitespace-pre-line">
+          {project.descriptionOverride === null ? project.description : project.descriptionOverride}
         </p>
       </div>
     </div>
