@@ -11,9 +11,9 @@ function FeaturedWork() {
       <SectionHeader text="Featured Work" />
       <div className="text-gray-900 grid grid-cols-12">
         {isPending ? (
-          <div>Loading Projects...</div>
+          <div className="text-gray-50">Loading...</div>
         ) : isError ? (
-          <div>Error: {error.message}</div>
+          <div className="text-gray-50">Error: {error.message}</div>
         ) : (
           projects.map((project) => <FeaturedProject key={project.id} project={project} />)
         )}
