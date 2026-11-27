@@ -15,7 +15,7 @@ function CurrentProject() {
       ) : isError ? (
         <div>Error: {error.message}</div>
       ) : (
-        <Project project={project} />
+        <Project project={project} variant="current" />
       )}
     </div>
   );
