@@ -62,7 +62,7 @@ function ProjectsList() {
           </select>
         </div> */}
       </div>
-      <div className="container mb-10">
+      <div className="container px-3 mb-10">
         {isPending ? (
           <div>Loading Projects...</div>
         ) : isError ? (
