@@ -6,7 +6,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import WireframeCube from "../meshes/WireframeCube";
 
 function Home() {
-  const phrases = ["software engineer.", "frontend enthusiast."];
+  const phrases = ["Software Developer.", "Full-Stack.", "Java and React.", "Web Apps."];
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [phraseVisible, setPhraseVisible] = useState(true);
 
