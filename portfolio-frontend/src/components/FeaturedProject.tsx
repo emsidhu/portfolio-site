@@ -7,7 +7,7 @@ function FeaturedProject({ project }: { project: ProjectData }) {
         <img
           src={project.photoUrl ?? undefined}
           alt="Project Image"
-          className="w-full max-h-[40lvw] md:max-h-[30lvw] lg:max-h-full object-cover"
+          className="text-gray-50 w-full max-h-[40lvw] md:max-h-[30lvw] lg:max-h-full object-cover"
         />
       </div>
       <div className="grid grid-rows-2 p-2 lg:px-1 lg:pb-0 text-gray-900 bg-linear-to-br from-purple-300 to-purple-400">
