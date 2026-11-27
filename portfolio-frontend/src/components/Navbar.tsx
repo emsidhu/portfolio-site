@@ -50,7 +50,7 @@ function Navbar() {
             Projects
           </Link>
         </div>
-        <a className="nav-icon" href="https://github.com/emsidhu">
+        <a className="nav-icon" href="https://github.com/emsidhu" target="_blank">
           <i className="bi bi-github"></i>
         </a>
       </nav>

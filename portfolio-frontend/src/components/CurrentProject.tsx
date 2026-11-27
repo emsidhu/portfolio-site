@@ -36,7 +36,7 @@ function CurrentProject() {
               </div>
 
               <div className="ml-auto flex shrink-0 items-center gap-2 text-3xl">
-                <a href={`${project.runUrl}`}>
+                <a href={`${project.runUrl}`} target="_blank">
                   {project.isDownload ? (
                     <i className="bi bi-download" />
                   ) : (
