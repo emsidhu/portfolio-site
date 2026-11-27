@@ -1,6 +1,6 @@
 package com.esidhu.portfolio_backend.dto;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,5 +18,5 @@ public class ProjectDto {
   private String name;
   private String owner;
   private String description;
-  private Instant latestCommitDate;
+  private LocalDate latestCommitDate;
 }

@@ -1,6 +1,6 @@
 package com.esidhu.portfolio_backend.model;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -27,10 +27,12 @@ public class Project {
   private Long id;
   private String name;
   private String owner;
+  @Column(columnDefinition = "TEXT")
   private String description;
+  @Column(columnDefinition = "TEXT")
   private String descriptionOverride;
   private String featuredDescription;
-  private Instant latestCommitDate;
+  private LocalDate latestCommitDate;
   private String title;
   private List<String> technologies;
   private String photoUrl;
