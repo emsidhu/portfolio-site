@@ -1,4 +1,5 @@
 import type { Project as ProjectData } from "../api/projectService.ts";
+import ProjectRunLink from "./ProjectRunLink";
 
 function FeaturedProject({ project }: { project: ProjectData }) {
   return (
@@ -10,15 +11,11 @@ function FeaturedProject({ project }: { project: ProjectData }) {
           className="text-gray-50 w-full max-h-[40lvw] md:max-h-[30lvw] lg:max-h-full object-cover"
         />
       </div>
-      <div className="grid grid-rows-2 p-2 lg:px-1 lg:pb-0 text-gray-900 bg-linear-to-br from-purple-300 to-purple-400">
+      <div className="flex flex-col gap-1 rounded-b-3xl p-2 lg:px-1 lg:pb-0 text-gray-900 bg-linear-to-br from-purple-300 to-purple-400">
         <div className="grid grid-cols-[1fr_auto_1fr] items-center text-3xl font-extrabold px-2">
-          <a href={`${project.runUrl}`} target="_blank">
-            {project.isDownload ? (
-              <i className="bi bi-download" />
-            ) : (
-              <i className="bi bi-play-circle" />
-            )}
-          </a>
+          <div>
+            <ProjectRunLink runUrl={project.runUrl} isDownload={project.isDownload} />
+          </div>
 
           <h3 className="text-center">{project.title === null ? project.name : project.title}</h3>
 
@@ -32,7 +29,7 @@ function FeaturedProject({ project }: { project: ProjectData }) {
           </a>
         </div>
 
-        <p className="text-center mt-2 pb-1 lg:pb-2 text-xl font-bold whitespace-pre-line">
+        <p className="text-center pb-1 lg:pb-2 mx-3 text-xl font-bold whitespace-pre-line">
           {project.featuredDescription}
         </p>
       </div>
