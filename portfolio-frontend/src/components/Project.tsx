@@ -1,4 +1,5 @@
 import TechPill from "./TechPill";
+import ProjectRunLink from "./ProjectRunLink";
 import type { Project as ProjectData } from "../api/projectService";
 
 function Project({ project }: { project: ProjectData }) {
@@ -24,13 +25,7 @@ function Project({ project }: { project: ProjectData }) {
           </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 text-3xl">
-            <a href={`${project.runUrl}`} target="_blank">
-              {project.isDownload ? (
-                <i className="bi bi-download" />
-              ) : (
-                <i className="bi bi-play-circle" />
-              )}
-            </a>
+            <ProjectRunLink runUrl={project.runUrl} isDownload={project.isDownload} />
             <a
               href={`https://github.com/${project.owner}/${project.name}`}
               target="_blank"
