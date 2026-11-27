@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import WireframeCube from "../meshes/WireframeCube";
 
 function Home() {
@@ -40,6 +41,15 @@ function Home() {
 
           <WireframeCube scale={3} />
           <OrbitControls makeDefault />
+          <EffectComposer>
+            <Bloom
+              mipmapBlur
+              luminanceThreshold={0.25}
+              luminanceSmoothing={0.2}
+              intensity={0.7}
+              radius={0.6}
+            />
+          </EffectComposer>
         </Canvas>
       </div>
       <div className="relative z-10 grid min-h-screen grid-rows-[1fr_auto_1fr] justify-items-center px-4 text-center [text-shadow:0_2px_6px_rgba(0,0,0,0.65)] pointer-events-none">
