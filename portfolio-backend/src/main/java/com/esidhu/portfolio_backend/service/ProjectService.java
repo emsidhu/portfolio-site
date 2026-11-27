@@ -1,8 +1,11 @@
 package com.esidhu.portfolio_backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import tools.jackson.databind.JsonNode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -50,6 +53,92 @@ public class ProjectService {
         HttpStatus.NOT_FOUND, "Project not found"));
   }
 
+  public Project updateProject(Long id, JsonNode updates) {
+    if (updates == null || !updates.isObject()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body must be a JSON object");
+    }
+
+    Set<String> editableFields = Set.of(
+        "featuredDescription",
+        "descriptionOverride",
+        "title",
+        "technologies",
+        "runUrl",
+        "isDownload",
+        "isActive",
+        "photoUrl");
+    updates.properties().forEach(property -> {
+      String field = property.getKey();
+      if (!editableFields.contains(field)) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported project field: " + field);
+      }
+    });
+
+    Project project = projectRepo.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
+
+    if (updates.has("featuredDescription")) {
+      project.setFeaturedDescription(readNullableText(updates.get("featuredDescription"), "featuredDescription"));
+    }
+    if (updates.has("descriptionOverride")) {
+      project.setDescriptionOverride(readNullableText(updates.get("descriptionOverride"), "descriptionOverride"));
+    }
+    if (updates.has("title")) {
+      project.setTitle(readNullableText(updates.get("title"), "title"));
+    }
+    if (updates.has("runUrl")) {
+      project.setRunUrl(readNullableText(updates.get("runUrl"), "runUrl"));
+    }
+    if (updates.has("photoUrl")) {
+      project.setPhotoUrl(readNullableText(updates.get("photoUrl"), "photoUrl"));
+    }
+    if (updates.has("technologies")) {
+      project.setTechnologies(readNullableTextList(updates.get("technologies"), "technologies"));
+    }
+    if (updates.has("isDownload")) {
+      project.setIsDownload(readBoolean(updates.get("isDownload"), "isDownload"));
+    }
+    if (updates.has("isActive")) {
+      project.setIsActive(readBoolean(updates.get("isActive"), "isActive"));
+    }
+
+    return projectRepo.save(project);
+  }
+
+  private String readNullableText(JsonNode value, String field) {
+    if (value.isNull()) {
+      return null;
+    }
+    if (!value.isString()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, field + " must be a string or null");
+    }
+    return value.stringValue();
+  }
+
+  private Boolean readBoolean(JsonNode value, String field) {
+    if (!value.isBoolean()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, field + " must be a boolean");
+    }
+    return value.booleanValue();
+  }
+
+  private List<String> readNullableTextList(JsonNode value, String field) {
+    if (value.isNull()) {
+      return null;
+    }
+    if (!value.isArray()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, field + " must be an array of strings or null");
+    }
+    List<String> strings = new ArrayList<>();
+    for (JsonNode item : value) {
+      if (!item.isString()) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, field + " must contain only strings");
+      }
+      strings.add(item.stringValue());
+    }
+    return strings;
+  }
+
   public Page<Project> getActiveProjects(int page, int size) {
     List<Long> activeIdList = projectRepo.findActiveIds();
     List<ProjectDto> modifiedProjects = gitService.getListOfRepos(activeIdList);
@@ -83,16 +172,6 @@ public class ProjectService {
     return projectRepo.findByIsCurrent(true)
         .orElseThrow(() -> new ResponseStatusException(
             HttpStatus.NOT_FOUND, "Current project does not exist"));
-  }
-
-  public Project setProjectActive(Long id, Boolean value) {
-    log.info("Setting project {} isActive to {}", id, value);
-    Project project = projectRepo.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Project not found"));
-
-    project.setIsActive(value);
-    return projectRepo.save(project);
   }
 
   public Project setProjectFeatured(Long id, Boolean value) {

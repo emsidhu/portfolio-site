@@ -2,11 +2,13 @@ package com.esidhu.portfolio_backend.controller;
 
 import java.util.List;
 
+import tools.jackson.databind.JsonNode;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +34,11 @@ public class ProjectController {
     return projectService.getProject(id);
   }
 
+  @PatchMapping("/{id}")
+  public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody JsonNode updates) {
+    return ResponseEntity.ok(projectService.updateProject(id, updates));
+  }
+
   @GetMapping("/active")
   public Page<Project> getActiveProjects(@RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "99") int size) {
@@ -48,15 +55,8 @@ public class ProjectController {
     return projectService.getCurrentProject();
   }
 
-  @PatchMapping("/{id}/active")
-  public ResponseEntity<Project> setProjectActive(@PathVariable Long id,
-      @RequestParam Boolean value) {
-    return ResponseEntity.ok().body(projectService.setProjectActive(id, value));
-  }
-
   @PatchMapping("/{id}/featured")
-  public ResponseEntity<Project> setProjectFeatured(@PathVariable Long id,
-      @RequestParam Boolean value) {
+  public ResponseEntity<Project> setProjectFeatured(@PathVariable Long id, @RequestParam Boolean value) {
     return ResponseEntity.ok().body(projectService.setProjectFeatured(id, value));
   }
 
