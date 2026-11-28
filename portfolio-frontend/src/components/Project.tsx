@@ -27,9 +27,9 @@ function Project({
         />
       </div>
       <div className={`p-4 ${backgroundColor}`}>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <h3 className="inline m-0 text-2xl font-bold">
+            <h3 className="m-0 text-2xl font-bold">
               {project.title === null ? project.name : project.title}
             </h3>
             {project.technologies &&
@@ -38,7 +38,7 @@ function Project({
               ))}
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-2 text-3xl">
+          <div className="flex shrink-0 items-center gap-2 text-3xl">
             <ProjectRunLink runUrl={project.runUrl} isDownload={project.isDownload} />
             <a
               href={`https://github.com/${project.owner}/${project.name}`}
