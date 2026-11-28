@@ -52,8 +52,16 @@ function Project({
         <p className="list-item list-disc ml-5 pt-1 text-md">
           Last Updated: {project.latestCommitDate}
         </p>
-        <div className="pt-2 text-lg space-y-4">
-          <ReactMarkdown remarkPlugins={[remarkBreaks]}>{descriptionText}</ReactMarkdown>
+        <div className="pt-2 text-lg">
+          <ReactMarkdown
+            remarkPlugins={[remarkBreaks]}
+            components={{
+              h3: ({ ...props }) => <h3 className="text-xl font-bold mt-1 mb-1" {...props} />,
+              ul: ({ ...props }) => <ul className="list-disc pl-6 space-y-1.5" {...props} />,
+            }}
+          >
+            {descriptionText}
+          </ReactMarkdown>
         </div>
       </div>
     </div>
