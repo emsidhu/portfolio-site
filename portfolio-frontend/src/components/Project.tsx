@@ -1,6 +1,8 @@
 import TechPill from "./TechPill";
 import ProjectRunLink from "./ProjectRunLink";
 import type { Project as ProjectData } from "../api/projectService";
+import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
 
 function Project({
   project,
@@ -13,6 +15,7 @@ function Project({
     variant === "current"
       ? "bg-linear-to-br from-amber-500 to-orange-500"
       : "bg-linear-to-br from-blue-300 to-blue-400";
+  const descriptionText = project.descriptionOverride ?? project.description;
 
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-2 border rounded-3xl mb-5 overflow-hidden">
@@ -49,9 +52,9 @@ function Project({
         <p className="list-item list-disc ml-5 pt-1 text-md">
           Last Updated: {project.latestCommitDate}
         </p>
-        <p className="pt-2 text-lg whitespace-pre-line">
-          {project.descriptionOverride === null ? project.description : project.descriptionOverride}
-        </p>
+        <div className="pt-2 text-lg space-y-4">
+          <ReactMarkdown remarkPlugins={[remarkBreaks]}>{descriptionText}</ReactMarkdown>
+        </div>
       </div>
     </div>
   );
